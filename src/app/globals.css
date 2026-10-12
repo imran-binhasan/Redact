@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #141a26;
+  --surface: #1b2231;
+  --surface-hi: #222b3c;
+  --line: #2a3344;
+  --text: #e6e9ef;
+  --muted: #858fa6;
+  --brass: #c8a34a;
+  --brass-dim: #8a7132;
+  --danger: #e0625e;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-surface-hi: var(--surface-hi);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-brass: var(--brass);
+  --color-brass-dim: var(--brass-dim);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--ink);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Focus is never invisible: this is an app you drive from the keyboard. */
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--brass-dim);
+  color: var(--text);
+}
+
+/* The signature device: a masked secret is a redaction bar, not a row of dots.
+   Revealing it wipes the bar away from the left, the way a marker lifts. */
+.redaction {
+  position: relative;
+  display: inline-block;
+  min-width: 8ch;
+}
+.redaction::after {
+  content: "";
+  position: absolute;
+  inset: -2px -4px;
+  background: var(--brass-dim);
+  transform-origin: left;
+  transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.redaction[data-revealed="true"]::after {
+  transform: scaleX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
