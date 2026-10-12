@@ -1,14 +1,19 @@
 {
-  "name": "vault",
+  "name": "redact",
   "version": "0.1.0",
-  "private": true,
+  "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --test src/lib/__tests__/*.test.ts"
   },
   "dependencies": {
+    "@noble/hashes": "^2.4.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.2",
     "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8"
